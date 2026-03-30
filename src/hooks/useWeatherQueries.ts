@@ -3,6 +3,7 @@ import {
 	fetchAirQualityMetrics,
 	fetchCurrentWeather,
 	fetchDailyWeather,
+	fetchHistoricalWeather,
 	fetchHourlyAirQuality,
 	fetchHourlyWeather,
 } from "../lib/weatherApi";
@@ -29,18 +30,30 @@ export function useDailyWeather(
 	});
 }
 
-export function useHourlyWeather(latitude?: number, longitude?: number) {
+export function useHourlyWeather(
+	startDate: string,
+	endDate: string,
+	latitude?: number,
+	longitude?: number,
+) {
 	return useQuery({
-		queryKey: ["hourlyWeather", latitude, longitude],
-		queryFn: () => fetchHourlyWeather(latitude!, longitude!),
+		queryKey: ["hourlyWeather", latitude, longitude, startDate, endDate],
+		queryFn: () =>
+			fetchHourlyWeather(latitude!, longitude!, startDate, endDate),
 		enabled: !!latitude && !!longitude,
 	});
 }
 
-export function useHourlyAirQuality(latitude?: number, longitude?: number) {
+export function useHourlyAirQuality(
+	startDate: string,
+	endDate: string,
+	latitude?: number,
+	longitude?: number,
+) {
 	return useQuery({
-		queryKey: ["airQuality", latitude, longitude],
-		queryFn: () => fetchHourlyAirQuality(latitude!, longitude!),
+		queryKey: ["airQuality", latitude, longitude, startDate, endDate],
+		queryFn: () =>
+			fetchHourlyAirQuality(latitude!, longitude!, startDate, endDate),
 		enabled: !!latitude && !!longitude,
 	});
 }
@@ -61,6 +74,26 @@ export function useAirQualityMetrics(
 		],
 		queryFn: () =>
 			fetchAirQualityMetrics(latitude!, longitude!, startDate, endDate),
+		enabled: !!latitude && !!longitude,
+	});
+}
+
+export function useHistoricalWeather(
+	startDate: string,
+	endDate: string,
+	latitude?: number,
+	longitude?: number,
+) {
+	return useQuery({
+		queryKey: [
+			"historicalWeather",
+			latitude,
+			longitude,
+			startDate,
+			endDate,
+		],
+		queryFn: () =>
+			fetchHistoricalWeather(latitude!, longitude!, startDate, endDate),
 		enabled: !!latitude && !!longitude,
 	});
 }

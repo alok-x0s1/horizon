@@ -20,7 +20,7 @@ export function ErrorState({
 
 			<h3 className="text-lg font-semibold text-foreground">{title}</h3>
 
-			<p className="text-sm text-muted-foreground mt-2 max-w-sm">
+			<p className="text-sm text-muted-foreground mt-2 max-w-lg">
 				{description}
 			</p>
 
@@ -29,6 +29,7 @@ export function ErrorState({
 					variant="outline"
 					className="mt-4 gap-2"
 					onClick={onRetry}
+					size="lg"
 				>
 					<RefreshCw className="h-4 w-4" />
 					Retry

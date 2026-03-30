@@ -8,6 +8,8 @@ import { normalizeDailyData } from "./utils";
 
 const BASE_URL = "https://api.open-meteo.com/v1";
 const BASE_AIR_QUALITY_URL = "https://air-quality-api.open-meteo.com/v1";
+const BASE_HISTORICAL_WEATHER =
+	"https://historical-forecast-api.open-meteo.com/v1";
 
 export async function fetchCurrentWeather(
 	latitude: number,
@@ -18,6 +20,11 @@ export async function fetchCurrentWeather(
 			`${BASE_URL}/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,weather_code,wind_speed_10m,relative_humidity_2m,precipitation,visibility&timezone=auto`,
 		);
 		const data = await response.json();
+		if (!response.ok) {
+			throw new Error(
+				data?.reason || "Failed to fetch current weather data",
+			);
+		}
 		return data.current;
 	} catch (error) {
 		console.error("Error fetching current weather:", error);
@@ -36,7 +43,11 @@ export async function fetchDailyWeather(
 			`${BASE_URL}/forecast?latitude=${latitude}&longitude=${longitude}&daily=temperature_2m_max,temperature_2m_min,uv_index_max,sunset,sunrise,wind_speed_10m_max,precipitation_probability_max&timezone=auto&start_date=${startDate}&end_date=${endDate}`,
 		);
 		const data = await response.json();
-		console.log(data);
+		if (!response.ok) {
+			throw new Error(
+				data?.reason || "Failed to fetch daily weather data",
+			);
+		}
 		return normalizeDailyData(data.daily);
 	} catch (error) {
 		console.error("Error fetching daily weather:", error);
@@ -47,12 +58,19 @@ export async function fetchDailyWeather(
 export async function fetchHourlyWeather(
 	latitude: number,
 	longitude: number,
+	start_date: string,
+	end_date: string,
 ): Promise<HourlyData> {
 	try {
 		const response = await fetch(
-			`${BASE_URL}/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m,precipitation,relative_humidity_2m,weather_code,visibility,wind_speed_10m&timezone=auto&forecast_days=1`,
+			`${BASE_URL}/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m,precipitation,relative_humidity_2m,weather_code,visibility,wind_speed_10m&timezone=auto&start_date=${start_date}&end_date=${end_date}`,
 		);
 		const data = await response.json();
+		if (!response.ok) {
+			throw new Error(
+				data?.reason || "Failed to fetch hourly weather data",
+			);
+		}
 		return data.hourly;
 	} catch (error) {
 		console.error("Error fetching hourly weather:", error);
@@ -63,12 +81,17 @@ export async function fetchHourlyWeather(
 export async function fetchHourlyAirQuality(
 	latitude: number,
 	longitude: number,
+	start_date: string,
+	end_date: string,
 ): Promise<HourlyData> {
 	try {
 		const response = await fetch(
-			`${BASE_AIR_QUALITY_URL}/air-quality?latitude=${latitude}&longitude=${longitude}&hourly=pm10,pm2_5&timezone=auto&forecast_days=1`,
+			`${BASE_AIR_QUALITY_URL}/air-quality?latitude=${latitude}&longitude=${longitude}&hourly=pm10,pm2_5&timezone=auto&start_date=${start_date}&end_date=${end_date}`,
 		);
 		const data = await response.json();
+		if (!response.ok) {
+			throw new Error(data?.reason || "Failed to fetch air quality data");
+		}
 		return data.hourly;
 	} catch (error) {
 		console.error("Error fetching air quality:", error);
@@ -87,6 +110,11 @@ export async function fetchAirQualityMetrics(
 			`${BASE_AIR_QUALITY_URL}/air-quality?latitude=${latitude}&longitude=${longitude}&current=pm10,pm2_5,carbon_monoxide,nitrogen_dioxide,sulphur_dioxide,ozone,us_aqi&start_date=${start_date}&end_date=${end_date}&timezone=auto`,
 		);
 		const data = await response.json();
+		if (!response.ok) {
+			throw new Error(
+				data?.reason || "Failed to fetch air quality metrics",
+			);
+		}
 		return data.current;
 	} catch (error) {
 		console.error("Error fetching air quality:", error);
@@ -94,28 +122,26 @@ export async function fetchAirQualityMetrics(
 	}
 }
 
-export async function fetchHistoricalAirQuality(
+export async function fetchHistoricalWeather(
 	latitude: number,
 	longitude: number,
-	startDate?: string,
-	endDate?: string,
+	startDate: string,
+	endDate: string,
 ) {
 	try {
-		const params = new URLSearchParams({
-			latitude: latitude.toString(),
-			longitude: longitude.toString(),
-			daily: "pm10,pm2_5",
-			timezone: "auto",
-			...(startDate && { start_date: startDate }),
-			...(endDate && { end_date: endDate }),
-		});
-
-		const response = await fetch(`${BASE_URL}/air-quality?${params}`);
+		const response = await fetch(
+			`${BASE_HISTORICAL_WEATHER}/forecast?latitude=${latitude}&longitude=${longitude}&start_date=${startDate}&end_date=${endDate}&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset,temperature_2m_mean,winddirection_10m_dominant,precipitation_sum,wind_speed_10m_max`,
+		);
 		const data = await response.json();
+		if (!response.ok) {
+			throw new Error(
+				data?.reason || "Failed to fetch historical weather data",
+			);
+		}
 		return data.daily;
 	} catch (error) {
 		console.error("Error fetching historical air quality:", error);
-		return { pm10: [], pm2_5: [] };
+		throw error;
 	}
 }
 
