@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import type { DailyWeatherData } from "./types";
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -54,21 +55,21 @@ export function normalizeDailyData(daily: {
 	precipitation_probability_max?: number[];
 	weather_code?: number[];
 	weather_code_max?: number[];
-}) {
+}): DailyWeatherData {
 	return {
-		time: daily.time?.[0],
-		temperature_2m_max: daily.temperature_2m_max?.[0],
-		temperature_2m_min: daily.temperature_2m_min?.[0],
-		uv_index_max: daily.uv_index_max?.[0],
-		sunrise: daily.sunrise?.[0],
-		sunset: daily.sunset?.[0],
-		wind_speed_10m_max: daily.wind_speed_10m_max?.[0],
-		precipitation_probability_max: daily.precipitation_probability_max?.[0],
-		weather_code: daily.weather_code?.[0],
-		weather_code_max: daily.weather_code_max?.[0],
+		time: daily.time?.[0] ?? "",
+		temperature_2m_max: daily.temperature_2m_max?.[0] ?? 0,
+		temperature_2m_min: daily.temperature_2m_min?.[0] ?? 0,
+		uv_index_max: daily.uv_index_max?.[0] ?? 0,
+		sunrise: daily.sunrise?.[0] ?? "",
+		sunset: daily.sunset?.[0] ?? "",
+		wind_speed_10m_max: daily.wind_speed_10m_max?.[0] ?? 0,
+		precipitation_probability_max:
+			daily.precipitation_probability_max?.[0] ?? 0,
+		weather_code: daily.weather_code?.[0] ?? 0,
+		weather_code_max: daily.weather_code_max?.[0] ?? 0,
 	};
 }
-
 export const formatTime = (time: string) =>
 	new Date(time).toLocaleTimeString("en-IN", {
 		hour: "2-digit",
