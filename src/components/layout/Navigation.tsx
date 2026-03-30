@@ -1,10 +1,10 @@
-import { Cloud, BarChart3, Calendar } from "lucide-react";
+import { Cloud, BarChart3 } from "lucide-react";
 import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
 
 interface NavigationProps {
-	currentPage: "current" | "calendar" | "historical";
-	onPageChange: (page: "current" | "calendar" | "historical") => void;
+	currentPage: "current" | "historical";
+	onPageChange: (page: "current" | "historical") => void;
 }
 
 export default function Navigation({
@@ -35,18 +35,7 @@ export default function Navigation({
 						className="gap-1 md:gap-2 text-xs md:text-sm flex-1 md:flex-none"
 					>
 						<Cloud className="h-4 w-4" />
-						<span className="inline">Now</span>
-					</Button>
-					<Button
-						variant={
-							currentPage === "calendar" ? "default" : "outline"
-						}
-						size="lg"
-						onClick={() => onPageChange("calendar")}
-						className="gap-1 md:gap-2 text-xs md:text-sm flex-1 md:flex-none"
-					>
-						<Calendar className="h-4 w-4" />
-						<span className="inline">Calendar</span>
+						<span className="inline">Current</span>
 					</Button>
 					<Button
 						variant={
