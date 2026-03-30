@@ -23,7 +23,10 @@ const AirQualityMetrics = () => {
 		return (
 			<ErrorState
 				title="Weather data unavailable"
-				description="Unable to fetch current weather for your location."
+				description={
+					error?.message ||
+					"Unable to fetch current weather for your location."
+				}
 				onRetry={refetch}
 			/>
 		);

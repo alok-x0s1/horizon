@@ -16,18 +16,23 @@ const WeatherHeader = () => {
 		coordinates?.longitude,
 	);
 
-	if (geoLoading || isLoading) {
+	if (geoLoading || isLoading || isRefetching) {
 		return <WeatherHeaderSkeleton />;
 	}
 
-	if (!data || error)
+	if (!data || error) {
+		console.log(error);
 		return (
 			<ErrorState
 				title="Weather data unavailable"
-				description="Unable to fetch current weather for your location."
+				description={
+					error?.message ||
+					"Unable to fetch current weather for your location."
+				}
 				onRetry={refetch}
 			/>
 		);
+	}
 
 	const temp = convertTemp(data?.temperature_2m, isCelsius);
 
@@ -35,6 +40,9 @@ const WeatherHeader = () => {
 		<div className="rounded-lg border border-card-border bg-linear-to-br from-accent/30 via-blue-500/20 to-accent/50 backdrop-blur-xl p-8 md:p-10">
 			<div className="flex flex-col items-start justify-between gap-4">
 				<div className="w-full">
+					<p className="text-foreground/80 text-xs">
+						Current Weather
+					</p>
 					<h2 className="mb-1 text-5xl md:text-6xl font-bold text-foreground">
 						{temp}°{" "}
 						<span className="text-2xl">

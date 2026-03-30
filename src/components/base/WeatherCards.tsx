@@ -25,6 +25,7 @@ export default function WeatherCards() {
 		isLoading: dailyLoading,
 		error: dailyError,
 		refetch,
+		isRefetching,
 	} = useDailyWeather(
 		selectedDate,
 		selectedDate,
@@ -36,7 +37,7 @@ export default function WeatherCards() {
 	const getTemp = (temp: number) =>
 		convertTemp(temp, isCelsius) + "°" + (isCelsius ? "C" : "F");
 
-	if (geoLoading || currentLoading || dailyLoading) {
+	if (geoLoading || currentLoading || dailyLoading || isRefetching) {
 		return <WeatherCardsSkeleton />;
 	}
 
@@ -44,7 +45,11 @@ export default function WeatherCards() {
 		return (
 			<ErrorState
 				title="Weather data unavailable"
-				description="Unable to fetch current weather for your location."
+				description={
+					currentError?.message ||
+					dailyError?.message ||
+					"Unable to fetch current weather for your location."
+				}
 				onRetry={refetch}
 			/>
 		);

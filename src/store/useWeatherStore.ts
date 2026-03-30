@@ -19,6 +19,6 @@ export const useWeatherStore = create<WeatherState>((set) => ({
 
 	setDate: (date) =>
 		set(() => ({
-			selectedDate: date,
+			selectedDate: date.split("T")[0],
 		})),
 }));

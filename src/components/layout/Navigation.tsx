@@ -1,6 +1,7 @@
 import { Cloud, BarChart3 } from "lucide-react";
 import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
+import { DatePicker } from "../base/DatePicker";
 
 interface NavigationProps {
 	currentPage: "current" | "historical";
@@ -26,6 +27,7 @@ export default function Navigation({
 				</Link>
 
 				<nav className="flex gap-1 md:gap-2 w-full md:w-auto">
+					<DatePicker />
 					<Button
 						variant={
 							currentPage === "current" ? "default" : "outline"

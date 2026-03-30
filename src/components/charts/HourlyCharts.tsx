@@ -11,7 +11,7 @@ import { Card } from "../ui/card";
 import HighchartsWrapper from "./HighChartsWrapper";
 
 export default function HourlyCharts() {
-	const { isCelsius } = useWeatherStore();
+	const { isCelsius, selectedDate: date } = useWeatherStore();
 	const { coordinates, loading: geoLoading } = useGeolocation();
 	const tempUnit = isCelsius ? "°C" : "°F";
 
@@ -20,17 +20,31 @@ export default function HourlyCharts() {
 		isLoading: weatherLoading,
 		error: weatherError,
 		refetch: refetchWeather,
-	} = useHourlyWeather(coordinates?.latitude, coordinates?.longitude);
+	} = useHourlyWeather(
+		date,
+		date,
+		coordinates?.latitude,
+		coordinates?.longitude,
+	);
 
 	const {
 		data: airQualityData,
 		isLoading: airQualityLoading,
 		error: airQualityError,
 		refetch: refetchAirQuality,
-	} = useHourlyAirQuality(coordinates?.latitude, coordinates?.longitude);
+	} = useHourlyAirQuality(
+		date,
+		date,
+		coordinates?.latitude,
+		coordinates?.longitude,
+	);
 
 	const isLoading = geoLoading || weatherLoading || airQualityLoading;
-	const isError = weatherError || airQualityError || !hourlyWeatherData;
+	const isError =
+		weatherError ||
+		airQualityError ||
+		!hourlyWeatherData ||
+		!airQualityData;
 
 	if (isLoading) {
 		return (
@@ -52,7 +66,11 @@ export default function HourlyCharts() {
 		return (
 			<ErrorState
 				title="Chart data unavailable"
-				description="Unable to load hourly weather and air quality data."
+				description={
+					weatherError?.message ||
+					airQualityError?.message ||
+					"Unable to load hourly weather and air quality data."
+				}
 				onRetry={() => {
 					refetchWeather();
 					refetchAirQuality();
@@ -86,7 +104,6 @@ export default function HourlyCharts() {
 				pm25: airQualityData?.pm2_5?.[i] ?? 0,
 			});
 		}
-		console.log("data", data);
 		return data;
 	};
 
