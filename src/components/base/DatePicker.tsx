@@ -199,7 +199,7 @@ export function DatePicker() {
 			<PopoverTrigger>
 				<div
 					data-empty={!date}
-					className="w-fit px-4 pt-1 rounded-sm text-sm justify-between font-normal cursor-pointer hover:underline"
+					className="w-fit pr-4 pt-1 rounded-sm text-sm justify-between font-normal cursor-pointer hover:underline"
 				>
 					{date ? format(date, "PPP") : <span>Pick a date</span>}
 				</div>
