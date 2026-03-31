@@ -48,27 +48,16 @@ export interface HourlyData {
 	pm2_5: number[];
 }
 
-// export interface DailyData {
-// 	time: string[];
-// 	temperatureMax: number[];
-// 	temperatureMin: number[];
-// 	temperature2mMax: number[];
-// 	temperature2mMin: number[];
-// 	precipitation: number[];
-// 	weatherCode: number[];
-// 	windSpeed10mMax: number[];
-// 	windDirection10mDominant: number[];
-// 	sunrise: string[];
-// 	sunset: string[];
-// }
-
-// export interface AirQualityData {
-// 	time: string[];
-// 	pm10: number[];
-// 	pm2_5: number[];
-// 	carbon_dioxide: number[];
-// 	carbon_monoxide: number[];
-// 	nitrogen_dioxide: number[];
-// 	sulphur_dioxide: number[];
-// 	uv_index: number[];
-// }
+export interface HistoricalData {
+	precipitation_sum: number[];
+	sunrise: string[];
+	sunset: string[];
+	time: string[];
+	temperature_2m_mean: number[];
+	temperature_2m_max: number[];
+	temperature_2m_min: number[];
+	wind_speed_10m_max: number[];
+	winddirection_10m_dominant: number[];
+	pm10: number[];
+	pm2_5: number[];
+}

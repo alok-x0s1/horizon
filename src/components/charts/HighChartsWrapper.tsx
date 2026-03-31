@@ -9,6 +9,7 @@ interface HighchartsWrapperProps {
 	xAxisTitle: string;
 	chartType: "line" | "area" | "column" | "spline";
 	height: number;
+	isTimeChart?: boolean;
 }
 
 export default function HighchartsWrapper({
@@ -20,6 +21,7 @@ export default function HighchartsWrapper({
 	xAxisTitle,
 	chartType,
 	height = 400,
+	isTimeChart = false,
 }: HighchartsWrapperProps) {
 	const containerRef = useRef<HTMLDivElement>(null);
 
@@ -102,11 +104,30 @@ export default function HighchartsWrapper({
 									}
 								: undefined,
 							labels: {
+								rotation: isTimeChart ? -90 : 0,
 								style: {
 									color: "var(--chart-2)",
 									fontSize: "12px",
 								},
 								formatter: function () {
+									if (isTimeChart) {
+										const h = Math.floor(
+											Number(this.value),
+										);
+										const m = Math.round(
+											(Number(this.value) % 1) * 60,
+										);
+
+										const d = new Date();
+										d.setHours(h);
+										d.setMinutes(m);
+
+										return d.toLocaleTimeString("en-US", {
+											hour: "2-digit",
+											minute: "2-digit",
+										});
+									}
+
 									return Number(this.value).toFixed(0);
 								},
 							},
@@ -119,19 +140,45 @@ export default function HighchartsWrapper({
 						credits: {
 							enabled: false,
 						},
-						tooltip: {
-							backgroundColor: "var(--background)",
-							borderColor: "var(--muted-foreground)",
-							borderWidth: 0.5,
-							borderRadius: 4,
-							shadow: false,
-							style: {
-								color: "var(--foreground)",
-							},
-							headerFormat:
-								'<span style="color: var(--destructive)"><b>{point.key}</b></span><br/>',
-							shared: true,
-						},
+
+						tooltip: isTimeChart
+							? {
+									formatter: function () {
+										const value = Number(this.y);
+
+										const h = Math.floor(value);
+										const m = Math.round((value % 1) * 60);
+
+										const d = new Date();
+										d.setHours(h);
+										d.setMinutes(m);
+
+										return `
+											<b>${this.key}</b><br/>
+											${this.series.name}: ${d.toLocaleTimeString("en-US", {
+												hour: "2-digit",
+												minute: "2-digit",
+												hour12: true,
+											})}
+										`;
+									},
+									backgroundColor: "var(--background)",
+									borderColor: "var(--muted-foreground)",
+									style: { color: "var(--foreground)" },
+								}
+							: {
+									backgroundColor: "var(--background)",
+									borderColor: "var(--muted-foreground)",
+									borderWidth: 0.5,
+									borderRadius: 4,
+									shadow: false,
+									style: {
+										color: "var(--foreground)",
+									},
+									headerFormat:
+										'<span style="color: var(--destructive)"><b>{point.key}</b></span><br/>',
+									shared: true,
+								},
 						rangeSelector: {
 							enabled: false,
 						},
@@ -172,6 +219,7 @@ export default function HighchartsWrapper({
 		yAxisTitle,
 		xAxisTitle,
 		subtitle,
+		isTimeChart,
 	]);
 
 	return <div ref={containerRef} className="w-full" />;

@@ -94,6 +94,6 @@ export function useHistoricalWeather(
 		],
 		queryFn: () =>
 			fetchHistoricalWeather(latitude!, longitude!, startDate, endDate),
-		enabled: !!latitude && !!longitude,
+		enabled: !!latitude && !!longitude && !!startDate && !!endDate,
 	});
 }

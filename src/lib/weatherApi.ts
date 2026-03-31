@@ -2,6 +2,7 @@ import type {
 	AirQualityMetrics,
 	CurrentWeatherData,
 	DailyWeatherData,
+	HistoricalData,
 	HourlyData,
 } from "./types";
 import { normalizeDailyData } from "./utils";
@@ -127,7 +128,7 @@ export async function fetchHistoricalWeather(
 	longitude: number,
 	startDate: string,
 	endDate: string,
-) {
+): Promise<HistoricalData> {
 	try {
 		const response = await fetch(
 			`${BASE_HISTORICAL_WEATHER}/forecast?latitude=${latitude}&longitude=${longitude}&start_date=${startDate}&end_date=${endDate}&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset,temperature_2m_mean,winddirection_10m_dominant,precipitation_sum,wind_speed_10m_max`,

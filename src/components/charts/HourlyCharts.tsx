@@ -120,6 +120,9 @@ export default function HourlyCharts() {
 						Number(d.temperature.toFixed(2)),
 					),
 					color: colors.purple,
+					marker: {
+						radius: 3,
+					},
 				},
 			],
 			yAxisTitle: `Temperature (${tempUnit})`,
@@ -131,6 +134,9 @@ export default function HourlyCharts() {
 					name: "Humidity (%)",
 					data: chartData.map((d) => d.humidity),
 					color: colors.greenBold,
+					marker: {
+						radius: 3,
+					},
 				},
 			],
 			yAxisTitle: "Humidity (%)",
@@ -142,6 +148,9 @@ export default function HourlyCharts() {
 					name: "Precipitation (mm)",
 					data: chartData.map((d) => d.precipitation),
 					color: colors.orange,
+					marker: {
+						radius: 3,
+					},
 				},
 			],
 			yAxisTitle: "Precipitation (mm)",
@@ -153,6 +162,9 @@ export default function HourlyCharts() {
 					name: "Visibility (km)",
 					data: chartData.map((d) => d.visibility),
 					color: colors.redBold,
+					marker: {
+						radius: 3,
+					},
 				},
 			],
 			yAxisTitle: "Visibility (km)",
@@ -164,6 +176,9 @@ export default function HourlyCharts() {
 					name: "Wind Speed (km/h)",
 					data: chartData.map((d) => d.windSpeed),
 					color: colors.blueBold,
+					marker: {
+						radius: 3,
+					},
 				},
 			],
 			yAxisTitle: "Wind Speed (km/h)",
@@ -175,11 +190,19 @@ export default function HourlyCharts() {
 					name: "PM2.5 (µg/m³)",
 					data: chartData.map((d) => d.pm25),
 					color: colors.pink,
+					marker: {
+						symbol: "circle",
+						radius: 3,
+					},
 				},
 				{
 					name: "PM10 (µg/m³)",
 					data: chartData.map((d) => d.pm10),
 					color: colors.green,
+					marker: {
+						symbol: "circle",
+						radius: 3,
+					},
 				},
 			],
 			yAxisTitle: "Air Quality (µg/m³)",
