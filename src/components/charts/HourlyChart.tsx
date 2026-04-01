@@ -205,7 +205,7 @@ export default function HourlyCharts() {
 					},
 				},
 			],
-			yAxisTitle: "Air Quality (µg/m³)",
+			yAxisTitle: "Air Pollutants (µg/m³)",
 		},
 	];
 

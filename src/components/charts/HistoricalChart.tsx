@@ -184,7 +184,7 @@ export default function HistoricalCharts({ historicalData, isCelsius }: Props) {
 						title="Dominant Wind Direction"
 						chartType="column"
 						categories={categories}
-						yAxisTitle="Degrees (°)"
+						yAxisTitle="Wind Direction (°)"
 						xAxisTitle="Date"
 						height={350}
 						series={[

@@ -2,6 +2,7 @@ import { useState } from "react";
 import CurrentWeather from "./components/base/CurrentWeather";
 import Navigation from "./components/layout/Navigation";
 import HistoricalAnalysis from "./components/base/HistoricalAnalysis";
+import { ThemeProvider } from "./components/theme-provider";
 
 function App() {
 	const [currentPage, setCurrentPage] = useState<"current" | "historical">(
@@ -9,18 +10,20 @@ function App() {
 	);
 
 	return (
-		<main className="min-h-screen bg-background text-foreground flex flex-col">
-			<Navigation
-				currentPage={currentPage}
-				onPageChange={setCurrentPage}
-			/>
+		<ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+			<main className="min-h-screen bg-background text-foreground flex flex-col">
+				<Navigation
+					currentPage={currentPage}
+					onPageChange={setCurrentPage}
+				/>
 
-			<div className="flex-1 container mx-auto px-3 md:px-4 py-8 md:py-12">
-				{currentPage === "current" && <CurrentWeather />}
+				<div className="flex-1 container mx-auto px-3 md:px-4 py-8">
+					{currentPage === "current" && <CurrentWeather />}
 
-				{currentPage === "historical" && <HistoricalAnalysis />}
-			</div>
-		</main>
+					{currentPage === "historical" && <HistoricalAnalysis />}
+				</div>
+			</main>
+		</ThemeProvider>
 	);
 }
 

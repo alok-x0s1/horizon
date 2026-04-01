@@ -1,9 +1,9 @@
 import { Skeleton } from "../ui/skeleton";
 
-function SectionSkeleton({ titleWidth = "w-40" }: { titleWidth?: string }) {
+function SectionSkeleton({ title }: { title: string }) {
 	return (
 		<div className="space-y-4">
-			<Skeleton className={`h-5 ${titleWidth}`} />
+			<h3 className="text-lg font-semibold text-foreground">{title}</h3>
 
 			<div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
 				{Array.from({ length: 3 }).map((_, i) => (
@@ -31,10 +31,10 @@ function SectionSkeleton({ titleWidth = "w-40" }: { titleWidth?: string }) {
 export function WeatherCardsSkeleton() {
 	return (
 		<div className="space-y-6">
-			<SectionSkeleton />
-			<SectionSkeleton />
-			<SectionSkeleton />
-			<SectionSkeleton />
+			<SectionSkeleton title="Temperature" />
+			<SectionSkeleton title="Atmospheric Conditions" />
+			<SectionSkeleton title="Sunrise & Sunset (IST)" />
+			<SectionSkeleton title="Wind & Rain" />
 		</div>
 	);
 }

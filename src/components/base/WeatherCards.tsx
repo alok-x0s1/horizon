@@ -61,21 +61,21 @@ export default function WeatherCards() {
 					icon={Sun}
 					label="Current"
 					value={`${getTemp(current.temperature_2m)}`}
-					color="text-yellow-400"
+					color="text-yellow-500"
 					bgColor="bg-yellow-500/10"
 				/>
 				<WeatherCard
 					icon={Sun}
 					label="Min"
 					value={`${getTemp(daily.temperature_2m_min)}`}
-					color="text-blue-400"
+					color="text-blue-500"
 					bgColor="bg-blue-500/10"
 				/>
 				<WeatherCard
 					icon={Sun}
 					label="Max"
 					value={`${getTemp(daily.temperature_2m_max)}`}
-					color="text-red-400"
+					color="text-red-500"
 					bgColor="bg-red-500/10"
 				/>
 			</WeatherSection>
@@ -85,55 +85,55 @@ export default function WeatherCards() {
 					icon={Cloud}
 					label="Precipitation"
 					value={`${current.precipitation ?? 0} mm`}
-					color="text-indigo-400"
+					color="text-indigo-500"
 					bgColor="bg-indigo-500/10"
 				/>
 				<WeatherCard
 					icon={Droplets}
 					label="Humidity"
 					value={`${current.relative_humidity_2m}%`}
-					color="text-blue-400"
+					color="text-blue-500"
 					bgColor="bg-blue-500/10"
 				/>
 				<WeatherCard
 					icon={Sun}
 					label="UV Index"
 					value={`${daily.uv_index_max ?? "--"}`}
-					color="text-orange-400"
+					color="text-orange-500"
 					bgColor="bg-orange-500/10"
 				/>
 			</WeatherSection>
 
-			<WeatherSection title="Sun Cycle">
+			<WeatherSection title="Sunrise & Sunset (IST)">
 				<WeatherCard
 					icon={Sunrise}
 					label="Sunrise"
 					value={formatTime(daily.sunrise)}
-					color="text-yellow-400"
+					color="text-yellow-500"
 					bgColor="bg-yellow-500/10"
 				/>
 				<WeatherCard
 					icon={Sunset}
 					label="Sunset"
 					value={formatTime(daily.sunset)}
-					color="text-orange-400"
+					color="text-orange-500"
 					bgColor="bg-orange-500/10"
 				/>
 			</WeatherSection>
 
-			<WeatherSection title="Wind & Air">
+			<WeatherSection title="Wind & Rain">
 				<WeatherCard
 					icon={Wind}
 					label="Maximum Wind Speed"
 					value={`${daily.wind_speed_10m_max} km/h`}
-					color="text-cyan-400"
+					color="text-cyan-500"
 					bgColor="bg-cyan-500/10"
 				/>
 				<WeatherCard
 					icon={Cloud}
 					label="Maximum Precipitation Probability"
 					value={`${daily.precipitation_probability_max ?? 0}%`}
-					color="text-indigo-400"
+					color="text-indigo-500"
 					bgColor="bg-indigo-500/10"
 				/>
 			</WeatherSection>

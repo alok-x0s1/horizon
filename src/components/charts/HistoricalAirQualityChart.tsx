@@ -44,10 +44,10 @@ export default function HistoricalAirQualityChart({
 	return (
 		<Card className="p-4">
 			<HighchartsWrapper
-				title="Air Quality"
+				title="Air Pollutants"
 				chartType="spline"
 				categories={grouped.dates}
-				yAxisTitle="µg/m³"
+				yAxisTitle="Air Pollutants (μg/m³)"
 				xAxisTitle="Date"
 				height={350}
 				series={[
