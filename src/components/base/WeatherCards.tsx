@@ -47,11 +47,11 @@ export default function WeatherCards() {
 	const getTemp = (temp: number) =>
 		convertTemp(temp, isCelsius) + "°" + (isCelsius ? "C" : "F");
 
-	if (currentLoading || dailyLoading || isRefetching || !current || !daily) {
+	if (currentLoading || dailyLoading || isRefetching) {
 		return <WeatherCardsSkeleton />;
 	}
 
-	if (currentError || dailyError)
+	if (currentError || dailyError || !current || !daily)
 		return (
 			<ErrorState
 				title="Weather data unavailable"
@@ -61,6 +61,7 @@ export default function WeatherCards() {
 					"Unable to fetch current weather for your location."
 				}
 				onRetry={refetch}
+				className="mt-12"
 			/>
 		);
 

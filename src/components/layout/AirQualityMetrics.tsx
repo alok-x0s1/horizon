@@ -15,11 +15,11 @@ const AirQualityMetrics = () => {
 			coordinates?.longitude,
 		);
 
-	if (!data || isLoading || isRefetching) {
+	if (isLoading || isRefetching) {
 		return <AirQualityMetricsSkeleton />;
 	}
 
-	if (error)
+	if (!data || error)
 		return (
 			<ErrorState
 				title="Weather data unavailable"

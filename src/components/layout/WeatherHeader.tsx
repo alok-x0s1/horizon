@@ -16,11 +16,11 @@ const WeatherHeader = () => {
 		coordinates?.longitude,
 	);
 
-	if (isLoading || isRefetching || !data) {
+	if (isLoading || isRefetching) {
 		return <WeatherHeaderSkeleton />;
 	}
 
-	if (error) {
+	if (error || !data) {
 		return (
 			<ErrorState
 				title="Weather data unavailable"

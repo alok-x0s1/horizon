@@ -42,10 +42,10 @@ export default function HourlyCharts() {
 
 	const isLoading =
 		weatherLoading ||
-		airQualityLoading ||
+		airQualityLoading
+	const isError = weatherError || airQualityError ||
 		!hourlyWeatherData ||
 		!airQualityData;
-	const isError = weatherError || airQualityError;
 
 	if (isLoading) {
 		return (
