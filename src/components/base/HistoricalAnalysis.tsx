@@ -76,68 +76,12 @@ export default function HistoricalAnalysis() {
 				<div className="flex flex-col gap-3 md:gap-4 md:items-end">
 					<div className="flex gap-2 min-w-0">
 						<Label>Start Date</Label>
-
-						<Popover>
-							<PopoverTrigger>
-								<div
-									data-empty={!startDate}
-									className="w-44 px-2 rounded-sm flex py-1 text-sm justify-between items-center font-normal border border-muted-foreground cursor-pointer hover:bg-foreground/10"
-								>
-									{startDate ? (
-										format(startDate, "PPP")
-									) : (
-										<span>Pick a date</span>
-									)}
-									<ChevronDown className="size-4" />
-								</div>
-							</PopoverTrigger>
-							<PopoverContent
-								className="w-auto p-0"
-								align="start"
-							>
-								<Calendar
-									className="w-65"
-									mode="single"
-									selected={startDate}
-									onSelect={setStartDate}
-									defaultMonth={startDate}
-									required
-								/>
-							</PopoverContent>
-						</Popover>
+						<SelectDate date={startDate} setDate={setStartDate} />
 					</div>
 
 					<div className="flex gap-2 min-w-0">
 						<Label>End Date</Label>
-
-						<Popover>
-							<PopoverTrigger>
-								<div
-									data-empty={!endDate}
-									className="w-44 px-2 rounded-sm flex py-1 text-sm justify-between items-center font-normal border border-muted-foreground cursor-pointer hover:bg-foreground/10"
-								>
-									{endDate ? (
-										format(endDate, "PPP")
-									) : (
-										<span>Pick a date</span>
-									)}
-									<ChevronDown className="size-4" />
-								</div>
-							</PopoverTrigger>
-							<PopoverContent
-								className="w-auto p-0"
-								align="start"
-							>
-								<Calendar
-									className="w-65"
-									mode="single"
-									selected={endDate}
-									onSelect={setEndDate}
-									defaultMonth={endDate}
-									required
-								/>
-							</PopoverContent>
-						</Popover>
+						<SelectDate date={endDate} setDate={setEndDate} />
 					</div>
 
 					<div className="flex gap-2 flex-wrap md:flex-nowrap">
@@ -206,5 +150,42 @@ export default function HistoricalAnalysis() {
 				/>
 			)}
 		</div>
+	);
+}
+
+function SelectDate({
+	date,
+	setDate,
+}: {
+	date: Date;
+	setDate: (date: Date) => void;
+}) {
+	const [isOpen, setOpen] = useState(false);
+
+	return (
+		<Popover open={isOpen} onOpenChange={setOpen}>
+			<PopoverTrigger>
+				<div
+					data-empty={!date}
+					className="w-44 px-2 rounded-sm flex py-1 text-sm justify-between items-center font-normal border border-muted-foreground cursor-pointer hover:bg-foreground/10"
+				>
+					{date ? format(date, "PPP") : <span>Pick a date</span>}
+					<ChevronDown className="size-4" />
+				</div>
+			</PopoverTrigger>
+			<PopoverContent className="w-auto p-0" align="start">
+				<Calendar
+					className="w-65"
+					mode="single"
+					selected={date}
+					onSelect={(date: Date) => {
+						setDate(date);
+						setOpen(false);
+					}}
+					defaultMonth={date}
+					required
+				/>
+			</PopoverContent>
+		</Popover>
 	);
 }

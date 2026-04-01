@@ -1,9 +1,10 @@
+import type { SeriesOptionsType } from "highcharts";
 import { useEffect, useRef } from "react";
 
 interface HighchartsWrapperProps {
 	title: string;
 	subtitle?: string;
-	series: any[];
+	series: SeriesOptionsType[];
 	categories?: string[];
 	yAxisTitle: string;
 	xAxisTitle: string;
@@ -51,9 +52,7 @@ export default function HighchartsWrapper({
 							},
 							panKey: "shift",
 						},
-						scrollbar: {
-							enabled: true,
-						},
+
 						navigator: {
 							enabled: true,
 						},
@@ -100,6 +99,9 @@ export default function HighchartsWrapper({
 								color: "var(--muted-foreground)",
 							},
 							lineWidth: 1,
+							scrollbar: {
+								enabled: true,
+							},
 						},
 						yAxis: {
 							title: yAxisTitle
@@ -147,7 +149,6 @@ export default function HighchartsWrapper({
 						credits: {
 							enabled: false,
 						},
-
 						tooltip: isTimeChart
 							? {
 									formatter: function () {

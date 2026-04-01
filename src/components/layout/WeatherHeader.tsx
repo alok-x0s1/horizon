@@ -21,7 +21,6 @@ const WeatherHeader = () => {
 	}
 
 	if (!data || error) {
-		console.log(error);
 		return (
 			<ErrorState
 				title="Weather data unavailable"

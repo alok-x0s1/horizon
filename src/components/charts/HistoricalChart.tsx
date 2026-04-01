@@ -38,7 +38,6 @@ export default function HistoricalCharts({ historicalData, isCelsius }: Props) {
 			};
 		});
 	}, [historicalData]);
-	console.log(chartData);
 
 	const categories = chartData.map((d) => d.date);
 
@@ -67,17 +66,17 @@ export default function HistoricalCharts({ historicalData, isCelsius }: Props) {
 					height={350}
 					series={[
 						{
+							type: "spline",
 							name: "Max Temp",
 							data: chartData.map((d) => d.tempMax),
 							color: colors.purple,
 							marker: {
 								symbol: "circle",
-								marker: {
-									symbol: "circle",
-								},
+								radius: 3,
 							},
 						},
 						{
+							type: "spline",
 							name: "Mean Temp",
 							data: chartData.map((d) => d.tempMean),
 							color: colors.greenBold,
@@ -87,6 +86,7 @@ export default function HistoricalCharts({ historicalData, isCelsius }: Props) {
 							},
 						},
 						{
+							type: "spline",
 							name: "Min Temp",
 							data: chartData.map((d) => d.tempMin),
 							color: colors.orange,
@@ -110,6 +110,7 @@ export default function HistoricalCharts({ historicalData, isCelsius }: Props) {
 					isTimeChart={true}
 					series={[
 						{
+							type: "spline",
 							name: "Sunrise 🌅",
 							data: chartData.map((d) =>
 								d.sunrise
@@ -124,6 +125,7 @@ export default function HistoricalCharts({ historicalData, isCelsius }: Props) {
 							},
 						},
 						{
+							type: "spline",
 							name: "Sunset 🌇",
 							data: chartData.map((d) =>
 								d.sunset
@@ -152,6 +154,7 @@ export default function HistoricalCharts({ historicalData, isCelsius }: Props) {
 					height={350}
 					series={[
 						{
+							type: "column",
 							name: "Rain (mm)",
 							data: chartData.map((d) => d.precip),
 							color: colors.red,
@@ -171,6 +174,7 @@ export default function HistoricalCharts({ historicalData, isCelsius }: Props) {
 						height={350}
 						series={[
 							{
+								type: "line",
 								name: "Wind Speed (km/h)",
 								data: chartData.map((d) => d.windSpeed),
 								color: colors.pink,
@@ -189,6 +193,7 @@ export default function HistoricalCharts({ historicalData, isCelsius }: Props) {
 						height={350}
 						series={[
 							{
+								type: "column",
 								name: `Direction (${getDirection(chartData[0].windDir)})`,
 								data: chartData.map((d) => d.windDir),
 								color: colors.green2,

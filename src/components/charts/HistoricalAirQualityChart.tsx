@@ -52,6 +52,7 @@ export default function HistoricalAirQualityChart({
 				height={350}
 				series={[
 					{
+						type: "spline",
 						name: "PM2.5",
 						data: grouped.pm25,
 						color: "#ef4444",
@@ -61,6 +62,7 @@ export default function HistoricalAirQualityChart({
 						},
 					},
 					{
+						type: "spline",
 						name: "PM10",
 						data: grouped.pm10,
 						color: "#22c55e",

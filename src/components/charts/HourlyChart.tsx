@@ -1,3 +1,4 @@
+import type { SeriesLineOptions } from "highcharts";
 import { useGeolocation } from "../../hooks/useGeolocation";
 import {
 	useHourlyAirQuality,
@@ -110,11 +111,16 @@ export default function HourlyCharts() {
 	const chartData = prepareChartData();
 	const times = chartData.map((d) => d.time);
 
-	const charts = [
+	const charts: {
+		title: string;
+		series: SeriesLineOptions[];
+		yAxisTitle: string;
+	}[] = [
 		{
 			title: "Temperature",
 			series: [
 				{
+					type: "line",
 					name: `Temperature (${tempUnit})`,
 					data: chartData.map((d) =>
 						Number(d.temperature.toFixed(2)),
@@ -131,6 +137,7 @@ export default function HourlyCharts() {
 			title: "Humidity",
 			series: [
 				{
+					type: "line",
 					name: "Humidity (%)",
 					data: chartData.map((d) => d.humidity),
 					color: colors.greenBold,
@@ -145,6 +152,7 @@ export default function HourlyCharts() {
 			title: "Precipitation",
 			series: [
 				{
+					type: "line",
 					name: "Precipitation (mm)",
 					data: chartData.map((d) => d.precipitation),
 					color: colors.orange,
@@ -159,6 +167,7 @@ export default function HourlyCharts() {
 			title: "Visibility",
 			series: [
 				{
+					type: "line",
 					name: "Visibility (km)",
 					data: chartData.map((d) => d.visibility),
 					color: colors.redBold,
@@ -173,6 +182,7 @@ export default function HourlyCharts() {
 			title: "Wind Speed",
 			series: [
 				{
+					type: "line",
 					name: "Wind Speed (km/h)",
 					data: chartData.map((d) => d.windSpeed),
 					color: colors.blueBold,
@@ -187,6 +197,7 @@ export default function HourlyCharts() {
 			title: "Air Pollutants",
 			series: [
 				{
+					type: "line",
 					name: "PM2.5 (µg/m³)",
 					data: chartData.map((d) => d.pm25),
 					color: colors.pink,
@@ -196,6 +207,7 @@ export default function HourlyCharts() {
 					},
 				},
 				{
+					type: "line",
 					name: "PM10 (µg/m³)",
 					data: chartData.map((d) => d.pm10),
 					color: colors.green,
