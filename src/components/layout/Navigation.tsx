@@ -48,7 +48,7 @@ export default function Navigation({
 						className="gap-1 md:gap-2 text-xs md:text-sm flex-1 md:flex-none"
 					>
 						<BarChart3 className="h-4 w-4" />
-						<span className="inline">History</span>
+						<span className="inline">Historical</span>
 					</Button>
 					<ModeToggle />
 				</nav>

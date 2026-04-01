@@ -2,11 +2,11 @@ import { useGeolocation } from "../../hooks/useGeolocation";
 import { AirQualityMetricsSkeleton } from "../skeleton/AirQualityMetricsSkeleton";
 import { useWeatherStore } from "../../store/useWeatherStore";
 import { useAirQualityMetrics } from "../../hooks/useWeatherQueries";
-import { ErrorState } from "./Error";
+import { ErrorState } from "../base/Error";
 
 const AirQualityMetrics = () => {
 	const { selectedDate: date } = useWeatherStore();
-	const { coordinates, loading: geoLoading } = useGeolocation();
+	const { coordinates } = useGeolocation();
 	const { data, isLoading, error, refetch, isRefetching } =
 		useAirQualityMetrics(
 			date,
@@ -15,11 +15,11 @@ const AirQualityMetrics = () => {
 			coordinates?.longitude,
 		);
 
-	if (geoLoading || isLoading || isRefetching) {
+	if (!data || isLoading || isRefetching) {
 		return <AirQualityMetricsSkeleton />;
 	}
 
-	if (!data || error)
+	if (error)
 		return (
 			<ErrorState
 				title="Weather data unavailable"

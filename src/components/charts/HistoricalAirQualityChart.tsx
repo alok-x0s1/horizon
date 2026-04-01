@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { useGeolocation } from "../../hooks/useGeolocation";
 import { useHourlyAirQuality } from "../../hooks/useWeatherQueries";
 import { formatDate, groupByDay } from "../../lib/utils";
-import { ErrorState } from "../layout/Error";
+import { ErrorState } from "../base/Error";
 import { Card } from "../ui/card";
 import HighchartsWrapper from "./HighChartsWrapper";
 

@@ -5,7 +5,7 @@ import { useGeolocation } from "../../hooks/useGeolocation";
 import { useHistoricalWeather } from "../../hooks/useWeatherQueries";
 import { useWeatherStore } from "../../store/useWeatherStore";
 import HistoricalCharts from "../charts/HistoricalChart";
-import { ErrorState } from "../layout/Error";
+import { ErrorState } from "./Error";
 import { Button } from "../ui/button";
 import { Calendar } from "../ui/calendar";
 import { Card } from "../ui/card";
@@ -26,7 +26,6 @@ export default function HistoricalAnalysis() {
 
 	const [appliedStartDate, setAppliedStartDate] = useState<Date | null>(null);
 	const [appliedEndDate, setAppliedEndDate] = useState<Date | null>(null);
-	const [hasSearched, setHasSearched] = useState(false);
 
 	const {
 		data,
@@ -42,12 +41,12 @@ export default function HistoricalAnalysis() {
 
 	const validationError = useMemo(() => {
 		if (!startDate || !endDate) return "Please select both dates";
-
 		if (startDate > endDate) return "Start date must be before end date";
 
 		const diff =
 			(endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24);
 
+		if (diff < 7) return "Date range must be at least 7 days";
 		if (diff > 730) return "Date range cannot exceed 2 years";
 
 		return null;
@@ -89,7 +88,6 @@ export default function HistoricalAnalysis() {
 							onClick={() => {
 								setAppliedStartDate(startDate);
 								setAppliedEndDate(endDate);
-								setHasSearched(true);
 							}}
 							disabled={
 								!!validationError || isLoading || geoLoading
@@ -124,11 +122,6 @@ export default function HistoricalAnalysis() {
 					</p>
 				)}
 
-				{!hasSearched && (
-					<p className="text-xs text-muted-foreground">
-						Select dates and click "Load Data"
-					</p>
-				)}
 				<p className="text-xs mt-0 text-muted-foreground">
 					Max: 2 years • Available: up to 60 years
 				</p>

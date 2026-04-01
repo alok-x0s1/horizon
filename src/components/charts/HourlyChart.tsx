@@ -6,14 +6,14 @@ import {
 } from "../../hooks/useWeatherQueries";
 import { colors } from "../../lib/utils";
 import { useWeatherStore } from "../../store/useWeatherStore";
-import { ErrorState } from "../layout/Error";
+import { ErrorState } from "../base/Error";
 import { ChartSkeleton } from "../skeleton/ChartSkeleton";
 import { Card } from "../ui/card";
 import HighchartsWrapper from "./HighChartsWrapper";
 
 export default function HourlyCharts() {
 	const { isCelsius, selectedDate: date } = useWeatherStore();
-	const { coordinates, loading: geoLoading } = useGeolocation();
+	const { coordinates } = useGeolocation();
 	const tempUnit = isCelsius ? "°C" : "°F";
 
 	const {
@@ -40,12 +40,12 @@ export default function HourlyCharts() {
 		coordinates?.longitude,
 	);
 
-	const isLoading = geoLoading || weatherLoading || airQualityLoading;
-	const isError =
-		weatherError ||
-		airQualityError ||
+	const isLoading =
+		weatherLoading ||
+		airQualityLoading ||
 		!hourlyWeatherData ||
 		!airQualityData;
+	const isError = weatherError || airQualityError;
 
 	if (isLoading) {
 		return (
@@ -134,7 +134,7 @@ export default function HourlyCharts() {
 			yAxisTitle: `Temperature (${tempUnit})`,
 		},
 		{
-			title: "Humidity",
+			title: "Relative Humidity",
 			series: [
 				{
 					type: "line",

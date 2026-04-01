@@ -1,19 +1,30 @@
-import { Cloud, Droplets, Sun, Sunrise, Sunset, Wind } from "lucide-react";
-import { convertTemp, formatTime } from "../../lib/utils";
-import { WeatherCard } from "../layout/WeatherCard";
-import { WeatherSection } from "../layout/WeatherSection";
-import { useWeatherStore } from "../../store/useWeatherStore";
+import {
+	CloudRain,
+	CloudSunRain,
+	Droplets,
+	Sun,
+	SunDim,
+	SunMedium,
+	Sunrise,
+	Sunset,
+	ThermometerSun,
+	Wind,
+} from "lucide-react";
 import { useGeolocation } from "../../hooks/useGeolocation";
-import { WeatherCardsSkeleton } from "../skeleton/WeatherCardsSkeleton";
-import { ErrorState } from "../layout/Error";
 import {
 	useCurrentWeather,
 	useDailyWeather,
 } from "../../hooks/useWeatherQueries";
+import { convertTemp, formatTime } from "../../lib/utils";
+import { useWeatherStore } from "../../store/useWeatherStore";
+import { ErrorState } from "./Error";
+import { WeatherCard } from "../layout/WeatherCard";
+import { WeatherSection } from "../layout/WeatherSection";
+import { WeatherCardsSkeleton } from "../skeleton/WeatherCardsSkeleton";
 
 export default function WeatherCards() {
-	const { coordinates, loading: geoLoading } = useGeolocation();
-	const { selectedDate } = useWeatherStore();
+	const { coordinates } = useGeolocation();
+	const { selectedDate, isCelsius } = useWeatherStore();
 
 	const {
 		data: current,
@@ -33,15 +44,14 @@ export default function WeatherCards() {
 		coordinates?.longitude,
 	);
 
-	const { isCelsius } = useWeatherStore();
 	const getTemp = (temp: number) =>
 		convertTemp(temp, isCelsius) + "°" + (isCelsius ? "C" : "F");
 
-	if (geoLoading || currentLoading || dailyLoading || isRefetching) {
+	if (currentLoading || dailyLoading || isRefetching || !current || !daily) {
 		return <WeatherCardsSkeleton />;
 	}
 
-	if (!current || !daily || currentError || dailyError)
+	if (currentError || dailyError)
 		return (
 			<ErrorState
 				title="Weather data unavailable"
@@ -55,17 +65,17 @@ export default function WeatherCards() {
 		);
 
 	return (
-		<div className="space-y-5">
+		<div className="space-y-5 pt-2">
 			<WeatherSection title="Temperature">
 				<WeatherCard
-					icon={Sun}
+					icon={SunMedium}
 					label="Current"
 					value={`${getTemp(current.temperature_2m)}`}
 					color="text-yellow-500"
 					bgColor="bg-yellow-500/10"
 				/>
 				<WeatherCard
-					icon={Sun}
+					icon={SunDim}
 					label="Min"
 					value={`${getTemp(daily.temperature_2m_min)}`}
 					color="text-blue-500"
@@ -82,7 +92,7 @@ export default function WeatherCards() {
 
 			<WeatherSection title="Atmospheric Conditions">
 				<WeatherCard
-					icon={Cloud}
+					icon={CloudRain}
 					label="Precipitation"
 					value={`${current.precipitation ?? 0} mm`}
 					color="text-indigo-500"
@@ -96,7 +106,7 @@ export default function WeatherCards() {
 					bgColor="bg-blue-500/10"
 				/>
 				<WeatherCard
-					icon={Sun}
+					icon={ThermometerSun}
 					label="UV Index"
 					value={`${daily.uv_index_max ?? "--"}`}
 					color="text-orange-500"
@@ -130,7 +140,7 @@ export default function WeatherCards() {
 					bgColor="bg-cyan-500/10"
 				/>
 				<WeatherCard
-					icon={Cloud}
+					icon={CloudSunRain}
 					label="Maximum Precipitation Probability"
 					value={`${daily.precipitation_probability_max ?? 0}%`}
 					color="text-indigo-500"

@@ -4,23 +4,23 @@ import { convertTemp } from "../../lib/utils";
 import { Button } from "../ui/button";
 import { RotateCw } from "lucide-react";
 import { WeatherHeaderSkeleton } from "../skeleton/WeatherHeaderSkeleton";
-import { ErrorState } from "./Error";
+import { ErrorState } from "../base/Error";
 import { useCurrentWeather } from "../../hooks/useWeatherQueries";
 import { getWeatherDescription } from "../../lib/weatherApi";
 
 const WeatherHeader = () => {
-	const { coordinates, loading: geoLoading } = useGeolocation();
-	const { isCelsius, toggleUnit } = useWeatherStore();
+	const { coordinates } = useGeolocation();
+	const { isCelsius, selectedDate, toggleUnit } = useWeatherStore();
 	const { data, isLoading, error, refetch, isRefetching } = useCurrentWeather(
 		coordinates?.latitude,
 		coordinates?.longitude,
 	);
 
-	if (geoLoading || isLoading || isRefetching) {
+	if (isLoading || isRefetching || !data) {
 		return <WeatherHeaderSkeleton />;
 	}
 
-	if (!data || error) {
+	if (error) {
 		return (
 			<ErrorState
 				title="Weather data unavailable"
@@ -58,7 +58,7 @@ const WeatherHeader = () => {
 							month: "long",
 							day: "numeric",
 						})} | ${new Intl.DateTimeFormat("en-US", {
-							hour: "numeric",
+							hour: "2-digit",
 							minute: "2-digit",
 						}).format(new Date())}`}
 					</p>
@@ -84,6 +84,14 @@ const WeatherHeader = () => {
 					</Button>
 				</div>
 			</div>
+			<p className="text-sm absolute -bottom-9 left-1/2 -translate-x-1/2">
+				{new Date(selectedDate).toLocaleDateString("en-US", {
+					weekday: "long",
+					year: "numeric",
+					month: "long",
+					day: "numeric",
+				})}
+			</p>
 		</div>
 	);
 };

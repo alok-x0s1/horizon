@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { toast } from "sonner";
 
 interface LocationCoordinates {
 	latitude: number;
@@ -19,16 +20,18 @@ export function useGeolocation(): UseGeolocationReturn {
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		// Check if geolocation is available
-		const checkGeolocation = () => {
-			if (!navigator.geolocation) {
+		if (!navigator.geolocation) {
+			toast.error("Geolocation is not supported by your browser", {
+				id: "geo-not-supported",
+			});
+
+			setTimeout(() => {
 				setError("Geolocation is not supported by your browser");
 				setLoading(false);
-			}
-		};
-		checkGeolocation();
+			}, 0);
+			return;
+		}
 
-		// Try to get user's location
 		navigator.geolocation.getCurrentPosition(
 			(position) => {
 				setCoordinates({
@@ -38,8 +41,16 @@ export function useGeolocation(): UseGeolocationReturn {
 				setLoading(false);
 			},
 			(err) => {
-				// If user denies permission, use a default location
-				console.log("Geolocation error:", err.message);
+				toast.warning(
+					err.message + ". Using default location instead.",
+					{
+						id: "location-error",
+						style: {
+							color: "var(--foreground)",
+							fontFamily: "var(--font-outfit)",
+						},
+					},
+				);
 				setCoordinates({
 					latitude: 26.8467,
 					longitude: 80.9462,
