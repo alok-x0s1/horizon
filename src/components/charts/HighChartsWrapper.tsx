@@ -49,6 +49,13 @@ export default function HighchartsWrapper({
 								enabled: true,
 								type: "x",
 							},
+							panKey: "shift",
+						},
+						scrollbar: {
+							enabled: true,
+						},
+						navigator: {
+							enabled: true,
 						},
 						title: {
 							text: title,

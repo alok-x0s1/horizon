@@ -1,6 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import type { DailyWeatherData } from "./types";
+import type { DailyWeatherData, HourlyData } from "./types";
+import { format } from "date-fns";
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -76,3 +77,45 @@ export const formatTime = (time: string) =>
 		minute: "2-digit",
 		hour12: true,
 	});
+
+export const formatDate = (date: Date) => format(date, "yyyy-MM-dd");
+
+export function groupByDay(hourly: HourlyData): {
+	dates: string[];
+	pm25: number[];
+	pm10: number[];
+} {
+	const map: Record<string, { pm25: number[]; pm10: number[] }> = {};
+
+	hourly.time.forEach((time: string, i: number) => {
+		const date = time.split("T")[0];
+
+		if (!map[date]) {
+			map[date] = { pm25: [], pm10: [] };
+		}
+
+		map[date].pm25.push(hourly.pm2_5[i]);
+		map[date].pm10.push(hourly.pm10[i]);
+	});
+
+	const dates: string[] = [];
+	const pm25: number[] = [];
+	const pm10: number[] = [];
+
+	Object.entries(map).forEach(([date, values]) => {
+		dates.push(
+			new Date(date).toLocaleDateString("en-US", {
+				month: "short",
+				day: "numeric",
+			}),
+		);
+
+		const avg = (arr: number[]) =>
+			Math.round(arr.reduce((a, b) => a + b, 0) / arr.length);
+
+		pm25.push(avg(values.pm25));
+		pm10.push(avg(values.pm10));
+	});
+
+	return { dates, pm25, pm10 };
+}

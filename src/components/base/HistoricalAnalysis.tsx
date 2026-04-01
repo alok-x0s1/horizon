@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { useGeolocation } from "../../hooks/useGeolocation";
 import { useHistoricalWeather } from "../../hooks/useWeatherQueries";
 import { useWeatherStore } from "../../store/useWeatherStore";
-import HistoricalCharts from "../charts/HistoricalCharts";
+import HistoricalCharts from "../charts/HistoricalChart";
 import { ErrorState } from "../layout/Error";
 import { Button } from "../ui/button";
 import { Calendar } from "../ui/calendar";
@@ -12,6 +12,8 @@ import { Card } from "../ui/card";
 import { Label } from "../ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Spinner } from "../ui/spinner";
+import HistoricalAirQualityChart from "../charts/HistoricalAirQualityChart";
+import { formatDate } from "../../lib/utils";
 
 export default function HistoricalAnalysis() {
 	const { coordinates, loading: geoLoading } = useGeolocation();
@@ -25,8 +27,6 @@ export default function HistoricalAnalysis() {
 	const [appliedStartDate, setAppliedStartDate] = useState<Date | null>(null);
 	const [appliedEndDate, setAppliedEndDate] = useState<Date | null>(null);
 	const [hasSearched, setHasSearched] = useState(false);
-
-	const formatDate = (date: Date) => format(date, "yyyy-MM-dd");
 
 	const {
 		data,
@@ -153,7 +153,7 @@ export default function HistoricalAnalysis() {
 							size="lg"
 							className="w-24"
 						>
-							{isLoading ? (
+							{isLoading || geoLoading ? (
 								<>
 									<Spinner className="mr-2 h-4 w-4" />
 									Loading...
@@ -198,6 +198,13 @@ export default function HistoricalAnalysis() {
 			) : data ? (
 				<HistoricalCharts historicalData={data} isCelsius={isCelsius} />
 			) : null}
+
+			{appliedStartDate && appliedEndDate && (
+				<HistoricalAirQualityChart
+					appliedStartDate={appliedStartDate}
+					appliedEndDate={appliedEndDate}
+				/>
+			)}
 		</div>
 	);
 }

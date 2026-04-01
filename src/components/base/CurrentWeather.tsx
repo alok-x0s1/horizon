@@ -1,4 +1,4 @@
-import HourlyCharts from "../charts/HourlyCharts";
+import HourlyCharts from "../charts/HourlyChart";
 import WeatherCards from "./WeatherCards";
 import WeatherHeader from "../layout/WeatherHeader";
 import AirQualityMetrics from "../layout/AirQualityMetrics";

@@ -79,27 +79,6 @@ export async function fetchHourlyWeather(
 	}
 }
 
-export async function fetchHourlyAirQuality(
-	latitude: number,
-	longitude: number,
-	start_date: string,
-	end_date: string,
-): Promise<HourlyData> {
-	try {
-		const response = await fetch(
-			`${BASE_AIR_QUALITY_URL}/air-quality?latitude=${latitude}&longitude=${longitude}&hourly=pm10,pm2_5&timezone=auto&start_date=${start_date}&end_date=${end_date}`,
-		);
-		const data = await response.json();
-		if (!response.ok) {
-			throw new Error(data?.reason || "Failed to fetch air quality data");
-		}
-		return data.hourly;
-	} catch (error) {
-		console.error("Error fetching air quality:", error);
-		throw error;
-	}
-}
-
 export async function fetchAirQualityMetrics(
 	latitude: number,
 	longitude: number,
@@ -117,6 +96,27 @@ export async function fetchAirQualityMetrics(
 			);
 		}
 		return data.current;
+	} catch (error) {
+		console.error("Error fetching air quality:", error);
+		throw error;
+	}
+}
+
+export async function fetchHourlyAirQuality(
+	latitude: number,
+	longitude: number,
+	start_date: string,
+	end_date: string,
+): Promise<HourlyData> {
+	try {
+		const response = await fetch(
+			`${BASE_AIR_QUALITY_URL}/air-quality?latitude=${latitude}&longitude=${longitude}&hourly=pm10,pm2_5&timezone=auto&start_date=${start_date}&end_date=${end_date}`,
+		);
+		const data = await response.json();
+		if (!response.ok) {
+			throw new Error(data?.reason || "Failed to fetch air quality data");
+		}
+		return data.hourly;
 	} catch (error) {
 		console.error("Error fetching air quality:", error);
 		throw error;
