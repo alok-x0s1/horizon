@@ -2,9 +2,9 @@ import { useMemo } from "react";
 import { useGeolocation, useHourlyAirQuality } from "../../hooks";
 import { formatDate, groupByDay } from "../../lib/utils";
 import { Card } from "../ui/card";
-import HighchartsWrapper from "../charts/HighchartsWrapper";
 import { ErrorState } from "../layout";
 import { Spinner } from "../ui/spinner";
+import HighchartsWrapper from "../charts/HighchartsWrapper";
 
 export default function HistoricalAirQuality({
 	appliedStartDate,
