@@ -4,6 +4,7 @@ import { formatDate, groupByDay } from "../../lib/utils";
 import { Card } from "../ui/card";
 import { HighchartsWrapper } from "../charts";
 import { ErrorState } from "../layout";
+import { Spinner } from "../ui/spinner";
 
 export default function HistoricalAirQuality({
 	appliedStartDate,
@@ -14,7 +15,7 @@ export default function HistoricalAirQuality({
 }) {
 	const { coordinates } = useGeolocation();
 
-	const { data, error, refetch } = useHourlyAirQuality(
+	const { data, error, isLoading, refetch } = useHourlyAirQuality(
 		appliedStartDate ? formatDate(appliedStartDate) : "",
 		appliedEndDate ? formatDate(appliedEndDate) : "",
 		coordinates?.latitude,
@@ -37,6 +38,16 @@ export default function HistoricalAirQuality({
 			/>
 		);
 	}
+
+	if (isLoading || !data)
+		return (
+			<div className="w-full min-h-75 flex justify-center items-center">
+				<Spinner className="size-5" />
+				<p className="ml-2 text-foreground/80">
+					Fetching historical air quality data...
+				</p>
+			</div>
+		);
 
 	if (!grouped) return null;
 

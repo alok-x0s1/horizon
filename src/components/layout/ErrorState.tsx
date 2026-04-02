@@ -18,7 +18,7 @@ export default function ErrorState({
 	return (
 		<div
 			className={cn(
-				"flex flex-col items-center justify-center text-center py-16 px-4 border border-destructive/30 rounded-xl bg-destructive/5 backdrop-blur-sm",
+				"flex flex-col items-center justify-center text-center py-16 px-4 border border-destructive/30 min-h-75 rounded-xl bg-destructive/5 backdrop-blur-sm",
 				className,
 			)}
 		>
@@ -35,7 +35,7 @@ export default function ErrorState({
 			{onRetry && (
 				<Button
 					variant="outline"
-					className="mt-4 gap-2"
+					className="mt-4 gap-2 border-destructive/20 px-5"
 					onClick={onRetry}
 					size="lg"
 				>

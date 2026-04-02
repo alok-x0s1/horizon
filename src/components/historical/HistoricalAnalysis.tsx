@@ -50,18 +50,18 @@ export default function HistoricalAnalysis() {
 		return null;
 	}, [startDate, endDate]);
 
-	if (historicalError) {
-		return (
-			<ErrorState
-				title="Historical Chart data unavailable"
-				description={
-					historicalError?.message ||
-					"Unable to load hourly weather and air quality data."
-				}
-				onRetry={refetch}
-			/>
-		);
-	}
+	// if (historicalError) {
+	// 	return (
+	// 		<ErrorState
+	// 			title="Historical Weather data unavailable"
+	// 			description={
+	// 				historicalError?.message ||
+	// 				"Unable to load hourly weather and air quality data."
+	// 			}
+	// 			onRetry={refetch}
+	// 		/>
+	// 	);
+	// }
 
 	return (
 		<div className="space-y-8">
@@ -126,10 +126,21 @@ export default function HistoricalAnalysis() {
 			</Card>
 
 			{isLoading ? (
-				<div className="w-full min-h-60 flex justify-center items-center">
+				<div className="w-full min-h-75 flex justify-center items-center">
 					<Spinner className="size-5" />
-					<p className="ml-2 text-foreground/80">Fetching data...</p>
+					<p className="ml-2 text-foreground/80">
+						Fetching historical weather data...
+					</p>
 				</div>
+			) : historicalError ? (
+				<ErrorState
+					title="Historical Weather data unavailable"
+					description={
+						historicalError?.message ||
+						"Unable to load historical weather data."
+					}
+					onRetry={refetch}
+				/>
 			) : data ? (
 				<HistoricalChart historicalData={data} isCelsius={isCelsius} />
 			) : null}
