@@ -1,3 +1,1 @@
-import HighchartsWrapper from "./HighchartsWrapper";
-
-export { HighchartsWrapper };
+export { default as HighchartsWrapper } from "./HighchartsWrapper.tsx";
