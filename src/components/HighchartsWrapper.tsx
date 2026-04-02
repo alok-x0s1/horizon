@@ -1,7 +1,7 @@
 import type { SeriesOptionsType } from "highcharts";
 import { useEffect, useRef } from "react";
 
-interface HighchartsWrapperProps {
+interface HighChartsWrapperProps {
 	title: string;
 	subtitle?: string;
 	series: SeriesOptionsType[];
@@ -13,7 +13,7 @@ interface HighchartsWrapperProps {
 	isTimeChart?: boolean;
 }
 
-export default function HighchartsWrapper({
+export default function HighChartsWrapper({
 	title,
 	subtitle,
 	series,
@@ -23,7 +23,7 @@ export default function HighchartsWrapper({
 	chartType,
 	height = 400,
 	isTimeChart = false,
-}: HighchartsWrapperProps) {
+}: HighChartsWrapperProps) {
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {

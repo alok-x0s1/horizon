@@ -4,7 +4,7 @@ import { formatDate, groupByDay } from "../../lib/utils";
 import { Card } from "../ui/card";
 import { ErrorState } from "../layout";
 import { Spinner } from "../ui/spinner";
-import HighchartsWrapper from "../charts/HighchartsWrapper";
+import HighChartsWrapper from "../HighchartsWrapper";
 
 export default function HistoricalAirQuality({
 	appliedStartDate,
@@ -53,7 +53,7 @@ export default function HistoricalAirQuality({
 
 	return (
 		<Card className="p-4">
-			<HighchartsWrapper
+			<HighChartsWrapper
 				title="Air Pollutants"
 				chartType="spline"
 				categories={grouped.dates}

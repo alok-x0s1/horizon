@@ -9,7 +9,7 @@ import { useWeatherStore } from "../../store";
 import { Card } from "../ui/card";
 import { ChartSkeleton } from "../skeleton";
 import { ErrorState } from "../layout";
-import HighchartsWrapper from "../charts/HighchartsWrapper";
+import HighChartsWrapper from "../HighchartsWrapper";
 
 export default function HourlyForecast() {
 	const { isCelsius, selectedDate: date } = useWeatherStore();
@@ -233,7 +233,7 @@ export default function HourlyForecast() {
 						key={chart.title}
 						className="border-card-border bg-card/80 backdrop-blur-xl p-4 md:p-6 overflow-hidden"
 					>
-						<HighchartsWrapper
+						<HighChartsWrapper
 							title={chart.title}
 							series={chart.series}
 							categories={times}

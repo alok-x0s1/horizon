@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import type { HistoricalData } from "../../lib/types";
 import { colors } from "../../lib/utils";
 import { Card } from "../ui/card";
-import HighchartsWrapper from "../charts/HighchartsWrapper";
+import HighChartsWrapper from "../HighchartsWrapper";
 
 interface Props {
 	historicalData: HistoricalData;
@@ -62,7 +62,7 @@ export default function HistoricalChart({ historicalData, isCelsius }: Props) {
 	return (
 		<div className="space-y-6">
 			<Card className="p-4">
-				<HighchartsWrapper
+				<HighChartsWrapper
 					title="Temperature Trends"
 					chartType="spline"
 					categories={categories}
@@ -105,7 +105,7 @@ export default function HistoricalChart({ historicalData, isCelsius }: Props) {
 			</Card>
 
 			<Card className="p-4">
-				<HighchartsWrapper
+				<HighChartsWrapper
 					title="Sunrise & Sunset (IST)"
 					chartType="spline"
 					categories={categories}
@@ -149,7 +149,7 @@ export default function HistoricalChart({ historicalData, isCelsius }: Props) {
 			</Card>
 
 			<Card className="p-4">
-				<HighchartsWrapper
+				<HighChartsWrapper
 					title="Precipitation"
 					subtitle={`Total: ${totalPrecip} mm`}
 					chartType="column"
@@ -170,7 +170,7 @@ export default function HistoricalChart({ historicalData, isCelsius }: Props) {
 
 			<div className="grid md:grid-cols-2 gap-4">
 				<Card className="p-4">
-					<HighchartsWrapper
+					<HighChartsWrapper
 						title="Max Wind Speed"
 						chartType="spline"
 						categories={categories}
@@ -189,7 +189,7 @@ export default function HistoricalChart({ historicalData, isCelsius }: Props) {
 				</Card>
 
 				<Card className="p-4">
-					<HighchartsWrapper
+					<HighChartsWrapper
 						title="Dominant Wind Direction"
 						chartType="column"
 						categories={categories}
