@@ -18,14 +18,19 @@ export default function HistoricalCharts({ historicalData, isCelsius }: Props) {
 		return historicalData.time.map((t: string, i: number) => {
 			const d = new Date(t);
 
+			const convertTemp = (temp: number) =>
+				isCelsius
+					? Number(temp.toFixed(2))
+					: Number(((temp * 9) / 5 + 32).toFixed(2));
+
 			return {
 				date: d.toLocaleDateString("en-US", {
 					month: "short",
 					day: "numeric",
 				}),
-				tempMax: historicalData.temperature_2m_max[i],
-				tempMin: historicalData.temperature_2m_min[i],
-				tempMean: historicalData.temperature_2m_mean[i],
+				tempMax: convertTemp(historicalData.temperature_2m_max[i]),
+				tempMin: convertTemp(historicalData.temperature_2m_min[i]),
+				tempMean: convertTemp(historicalData.temperature_2m_mean[i]),
 				precip: historicalData.precipitation_sum?.[i] || 0,
 				windSpeed: historicalData.wind_speed_10m_max[i] || 0,
 				windDir: historicalData.winddirection_10m_dominant?.[i] || 0,
@@ -37,7 +42,7 @@ export default function HistoricalCharts({ historicalData, isCelsius }: Props) {
 					: null,
 			};
 		});
-	}, [historicalData]);
+	}, [historicalData, isCelsius]);
 
 	const categories = chartData.map((d) => d.date);
 
@@ -194,7 +199,7 @@ export default function HistoricalCharts({ historicalData, isCelsius }: Props) {
 						series={[
 							{
 								type: "column",
-								name: `Direction (${getDirection(chartData[0].windDir)})`,
+								name: `Direction (${getDirection(chartData[0].windDir || 0)})`,
 								data: chartData.map((d) => d.windDir),
 								color: colors.green2,
 							},
