@@ -15,14 +15,10 @@ const AirQualityMetrics = () => {
 			coordinates?.longitude,
 		);
 
-	if (isLoading || isRefetching) {
-		return <AirQualityMetricsSkeleton />;
-	}
-
-	if (!data || error)
+	if (error)
 		return (
 			<ErrorState
-				title="Weather data unavailable"
+				title="Air Quality Matrics data unavailable"
 				description={
 					error?.message ||
 					"Unable to fetch current weather for your location."
@@ -30,6 +26,10 @@ const AirQualityMetrics = () => {
 				onRetry={refetch}
 			/>
 		);
+
+	if (!data || isLoading || isRefetching) {
+		return <AirQualityMetricsSkeleton />;
+	}
 
 	return (
 		<div className="bg-card backdrop-blur-xl border border-card-border rounded-xl p-6 md:p-8">

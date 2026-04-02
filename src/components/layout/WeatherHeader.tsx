@@ -16,14 +16,10 @@ const WeatherHeader = () => {
 		coordinates?.longitude,
 	);
 
-	if (isLoading || isRefetching) {
-		return <WeatherHeaderSkeleton />;
-	}
-
-	if (error || !data) {
+	if (error) {
 		return (
 			<ErrorState
-				title="Weather data unavailable"
+				title="Current Weather data unavailable"
 				description={
 					error?.message ||
 					"Unable to fetch current weather for your location."
@@ -31,6 +27,10 @@ const WeatherHeader = () => {
 				onRetry={refetch}
 			/>
 		);
+	}
+
+	if (isLoading || isRefetching || !data) {
+		return <WeatherHeaderSkeleton />;
 	}
 
 	const temp = convertTemp(data?.temperature_2m, isCelsius);

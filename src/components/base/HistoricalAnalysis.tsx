@@ -55,7 +55,7 @@ export default function HistoricalAnalysis() {
 	if (historicalError) {
 		return (
 			<ErrorState
-				title="Chart data unavailable"
+				title="Historical Chart data unavailable"
 				description={
 					historicalError?.message ||
 					"Unable to load hourly weather and air quality data."

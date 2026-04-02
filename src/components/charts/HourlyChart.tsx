@@ -42,10 +42,27 @@ export default function HourlyCharts() {
 
 	const isLoading =
 		weatherLoading ||
-		airQualityLoading
-	const isError = weatherError || airQualityError ||
+		airQualityLoading ||
 		!hourlyWeatherData ||
 		!airQualityData;
+	const isError = weatherError || airQualityError;
+
+	if (isError) {
+		return (
+			<ErrorState
+				title="Hourly Chart data unavailable"
+				description={
+					weatherError?.message ||
+					airQualityError?.message ||
+					"Unable to load hourly weather and air quality data."
+				}
+				onRetry={() => {
+					refetchWeather();
+					refetchAirQuality();
+				}}
+			/>
+		);
+	}
 
 	if (isLoading) {
 		return (
@@ -60,23 +77,6 @@ export default function HourlyCharts() {
 					))}
 				</div>
 			</div>
-		);
-	}
-
-	if (isError) {
-		return (
-			<ErrorState
-				title="Chart data unavailable"
-				description={
-					weatherError?.message ||
-					airQualityError?.message ||
-					"Unable to load hourly weather and air quality data."
-				}
-				onRetry={() => {
-					refetchWeather();
-					refetchAirQuality();
-				}}
-			/>
 		);
 	}
 

@@ -30,7 +30,7 @@ export default function HistoricalAirQualityChart({
 	if (error) {
 		return (
 			<ErrorState
-				title="Chart data unavailable"
+				title="Historical Air Quality data unavailable"
 				description={
 					error?.message || "Unable to load air quality data."
 				}
