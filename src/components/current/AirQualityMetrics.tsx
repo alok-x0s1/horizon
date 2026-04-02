@@ -1,10 +1,9 @@
-import { useGeolocation } from "../../hooks/useGeolocation";
-import { AirQualityMetricsSkeleton } from "../skeleton/AirQualityMetricsSkeleton";
-import { useWeatherStore } from "../../store/useWeatherStore";
-import { useAirQualityMetrics } from "../../hooks/useWeatherQueries";
-import { ErrorState } from "../base/Error";
+import { useAirQualityMetrics, useGeolocation } from "../../hooks";
+import { AirQualityMetricsSkeleton } from "../skeleton";
+import { ErrorState } from "../layout";
+import { useWeatherStore } from "../../store";
 
-const AirQualityMetrics = () => {
+export default function AirQualityMetrics() {
 	const { selectedDate: date } = useWeatherStore();
 	const { coordinates } = useGeolocation();
 	const { data, isLoading, error, refetch, isRefetching } =
@@ -92,6 +91,4 @@ const AirQualityMetrics = () => {
 			</div>
 		</div>
 	);
-};
-
-export default AirQualityMetrics;
+}

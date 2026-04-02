@@ -61,3 +61,5 @@ export interface HistoricalData {
 	pm10: number[];
 	pm2_5: number[];
 }
+
+export type Theme = "dark" | "light" | "system";

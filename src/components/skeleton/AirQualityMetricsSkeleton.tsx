@@ -1,7 +1,7 @@
 import { Card } from "../ui/card";
 import { Skeleton } from "../ui/skeleton";
 
-export function AirQualityMetricsSkeleton() {
+export default function AirQualityMetricsSkeleton() {
 	return (
 		<Card className="bg-card backdrop-blur-xl border border-card-border rounded-xl p-6 md:p-8">
 			<h3 className="text-lg md:text-xl font-bold text-foreground mb-6">

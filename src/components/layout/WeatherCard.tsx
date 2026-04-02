@@ -9,7 +9,7 @@ interface WeatherCardProps {
 	bgColor: string;
 }
 
-export function WeatherCard({
+export default function WeatherCard({
 	icon: Icon,
 	label,
 	value,

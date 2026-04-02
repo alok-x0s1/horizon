@@ -10,19 +10,17 @@ import {
 	ThermometerSun,
 	Wind,
 } from "lucide-react";
-import { useGeolocation } from "../../hooks/useGeolocation";
 import {
 	useCurrentWeather,
 	useDailyWeather,
-} from "../../hooks/useWeatherQueries";
+	useGeolocation,
+} from "../../hooks";
 import { convertTemp, formatTime } from "../../lib/utils";
-import { useWeatherStore } from "../../store/useWeatherStore";
-import { ErrorState } from "./Error";
-import { WeatherCard } from "../layout/WeatherCard";
-import { WeatherSection } from "../layout/WeatherSection";
-import { WeatherCardsSkeleton } from "../skeleton/WeatherCardsSkeleton";
+import { useWeatherStore } from "../../store";
+import { WeatherVariablesSkeleton } from "../skeleton";
+import { ErrorState, WeatherCard, WeatherSection } from "../layout";
 
-export default function WeatherCards() {
+export default function WeatherVariables() {
 	const { coordinates } = useGeolocation();
 	const { selectedDate, isCelsius } = useWeatherStore();
 
@@ -50,7 +48,7 @@ export default function WeatherCards() {
 	if (currentError || dailyError)
 		return (
 			<ErrorState
-				title="Weather data unavailable"
+				title="Weather Variables data unavailable"
 				description={
 					currentError?.message ||
 					dailyError?.message ||
@@ -62,7 +60,7 @@ export default function WeatherCards() {
 		);
 
 	if (currentLoading || dailyLoading || isRefetching || !current || !daily) {
-		return <WeatherCardsSkeleton />;
+		return <WeatherVariablesSkeleton />;
 	}
 
 	return (

@@ -1,7 +1,6 @@
 import { Cloud, BarChart3 } from "lucide-react";
 import { Button } from "../ui/button";
-import { DatePicker } from "../base/DatePicker";
-import { ModeToggle } from "../mode-toggle";
+import { ThemeModeToggle, DatePicker } from "../layout";
 
 interface NavigationProps {
 	currentPage: "current" | "historical";
@@ -50,7 +49,7 @@ export default function Navigation({
 						<BarChart3 className="h-4 w-4" />
 						<span className="inline">Historical</span>
 					</Button>
-					<ModeToggle />
+					<ThemeModeToggle />
 				</nav>
 			</div>
 		</header>

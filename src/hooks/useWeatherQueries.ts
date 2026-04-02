@@ -6,7 +6,7 @@ import {
 	fetchHistoricalWeather,
 	fetchHourlyAirQuality,
 	fetchHourlyWeather,
-} from "../lib/weatherApi";
+} from "../lib/weather-api";
 
 export function useCurrentWeather(latitude?: number, longitude?: number) {
 	return useQuery({

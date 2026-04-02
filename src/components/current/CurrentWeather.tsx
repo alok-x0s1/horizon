@@ -1,14 +1,13 @@
-import { useGeolocation } from "../../hooks/useGeolocation";
-import { useWeatherStore } from "../../store/useWeatherStore";
+import { useCurrentWeather, useGeolocation } from "../../hooks";
+import { useWeatherStore } from "../../store";
 import { convertTemp } from "../../lib/utils";
 import { Button } from "../ui/button";
 import { RotateCw } from "lucide-react";
-import { WeatherHeaderSkeleton } from "../skeleton/WeatherHeaderSkeleton";
-import { ErrorState } from "../base/Error";
-import { useCurrentWeather } from "../../hooks/useWeatherQueries";
-import { getWeatherDescription } from "../../lib/weatherApi";
+import { getWeatherDescription } from "../../lib/weather-api";
+import { CurrentWeatherSkeleton } from "../skeleton";
+import { ErrorState } from "../layout";
 
-const WeatherHeader = () => {
+export default function CurrentWeather() {
 	const { coordinates } = useGeolocation();
 	const { isCelsius, selectedDate, toggleUnit } = useWeatherStore();
 	const { data, isLoading, error, refetch, isRefetching } = useCurrentWeather(
@@ -30,7 +29,7 @@ const WeatherHeader = () => {
 	}
 
 	if (isLoading || isRefetching || !data) {
-		return <WeatherHeaderSkeleton />;
+		return <CurrentWeatherSkeleton />;
 	}
 
 	const temp = convertTemp(data?.temperature_2m, isCelsius);
@@ -94,6 +93,4 @@ const WeatherHeader = () => {
 			</p>
 		</div>
 	);
-};
-
-export default WeatherHeader;
+}

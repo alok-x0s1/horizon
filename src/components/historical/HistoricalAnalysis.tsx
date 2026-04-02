@@ -1,19 +1,17 @@
 import { format } from "date-fns";
 import { ChevronDown } from "lucide-react";
 import { useMemo, useState } from "react";
-import { useGeolocation } from "../../hooks/useGeolocation";
-import { useHistoricalWeather } from "../../hooks/useWeatherQueries";
-import { useWeatherStore } from "../../store/useWeatherStore";
-import HistoricalCharts from "../charts/HistoricalChart";
-import { ErrorState } from "./Error";
+import { useWeatherStore } from "../../store";
+import { ErrorState } from "../layout";
 import { Button } from "../ui/button";
 import { Calendar } from "../ui/calendar";
 import { Card } from "../ui/card";
 import { Label } from "../ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Spinner } from "../ui/spinner";
-import HistoricalAirQualityChart from "../charts/HistoricalAirQualityChart";
 import { formatDate } from "../../lib/utils";
+import { HistoricalAirQuality, HistoricalChart } from "../historical";
+import { useGeolocation, useHistoricalWeather } from "../../hooks";
 
 export default function HistoricalAnalysis() {
 	const { coordinates, loading: geoLoading } = useGeolocation();
@@ -133,11 +131,11 @@ export default function HistoricalAnalysis() {
 					<p className="ml-2 text-foreground/80">Fetching data...</p>
 				</div>
 			) : data ? (
-				<HistoricalCharts historicalData={data} isCelsius={isCelsius} />
+				<HistoricalChart historicalData={data} isCelsius={isCelsius} />
 			) : null}
 
 			{appliedStartDate && appliedEndDate && (
-				<HistoricalAirQualityChart
+				<HistoricalAirQuality
 					appliedStartDate={appliedStartDate}
 					appliedEndDate={appliedEndDate}
 				/>

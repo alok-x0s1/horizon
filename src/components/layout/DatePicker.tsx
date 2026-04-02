@@ -1,10 +1,10 @@
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { format } from "date-fns";
 import { Calendar } from "../ui/calendar";
-import { useWeatherStore } from "../../store/useWeatherStore";
+import { useWeatherStore } from "../../store";
 import { useState } from "react";
 
-export function DatePicker() {
+export default function DatePicker() {
 	const { selectedDate: date, setDate } = useWeatherStore();
 	const [open, setOpen] = useState(false);
 

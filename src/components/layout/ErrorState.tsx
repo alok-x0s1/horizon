@@ -9,7 +9,7 @@ interface ErrorStateProps {
 	className?: string;
 }
 
-export function ErrorState({
+export default function ErrorState({
 	title = "Something went wrong",
 	description = "We couldn't load the data. Please try again.",
 	onRetry,

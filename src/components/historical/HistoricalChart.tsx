@@ -2,14 +2,14 @@ import { useMemo } from "react";
 import type { HistoricalData } from "../../lib/types";
 import { colors } from "../../lib/utils";
 import { Card } from "../ui/card";
-import HighchartsWrapper from "./HighChartsWrapper";
+import { HighchartsWrapper } from "../charts";
 
 interface Props {
 	historicalData: HistoricalData;
 	isCelsius: boolean;
 }
 
-export default function HistoricalCharts({ historicalData, isCelsius }: Props) {
+export default function HistoricalChart({ historicalData, isCelsius }: Props) {
 	const tempUnit = isCelsius ? "°C" : "°F";
 
 	const chartData = useMemo(() => {

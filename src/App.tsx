@@ -1,7 +1,12 @@
 import { useState } from "react";
-import HistoricalAnalysis from "./components/base/HistoricalAnalysis";
-import CurrentWeather from "./components/layout/CurrentWeather";
-import Navigation from "./components/layout/Navigation";
+import {
+	AirQualityMetrics,
+	CurrentWeather,
+	HourlyForecast,
+	WeatherVariables,
+} from "./components/current";
+import { Navigation } from "./components/layout";
+import { HistoricalAnalysis } from "./components/historical";
 
 function App() {
 	const [currentPage, setCurrentPage] = useState<"current" | "historical">(
@@ -20,7 +25,12 @@ function App() {
 						display: currentPage === "current" ? "block" : "none",
 					}}
 				>
-					<CurrentWeather />
+					<div className="space-y-8">
+						<CurrentWeather />
+						<WeatherVariables />
+						<AirQualityMetrics />
+						<HourlyForecast />
+					</div>
 				</div>
 				<div
 					style={{

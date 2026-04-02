@@ -1,17 +1,17 @@
 import type { SeriesLineOptions } from "highcharts";
-import { useGeolocation } from "../../hooks/useGeolocation";
 import {
+	useGeolocation,
 	useHourlyAirQuality,
 	useHourlyWeather,
-} from "../../hooks/useWeatherQueries";
+} from "../../hooks";
 import { colors } from "../../lib/utils";
-import { useWeatherStore } from "../../store/useWeatherStore";
-import { ErrorState } from "../base/Error";
-import { ChartSkeleton } from "../skeleton/ChartSkeleton";
+import { useWeatherStore } from "../../store";
 import { Card } from "../ui/card";
-import HighchartsWrapper from "./HighChartsWrapper";
+import { ChartSkeleton } from "../skeleton";
+import { HighchartsWrapper } from "../charts";
+import { ErrorState } from "../layout";
 
-export default function HourlyCharts() {
+export default function HourlyForecast() {
 	const { isCelsius, selectedDate: date } = useWeatherStore();
 	const { coordinates } = useGeolocation();
 	const tempUnit = isCelsius ? "°C" : "°F";

@@ -28,7 +28,7 @@ function SectionSkeleton({ title }: { title: string }) {
 	);
 }
 
-export function WeatherCardsSkeleton() {
+export default function WeatherVariablesSkeleton() {
 	return (
 		<div className="space-y-6">
 			<SectionSkeleton title="Temperature" />

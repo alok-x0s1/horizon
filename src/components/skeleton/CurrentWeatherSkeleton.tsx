@@ -1,6 +1,6 @@
 import { Skeleton } from "../ui/skeleton";
 
-export function WeatherHeaderSkeleton() {
+export default function CurrentWeatherSkeleton() {
 	return (
 		<div className="rounded-lg border border-card-border bg-linear-to-br from-accent/30 via-blue-500/20 to-accent/50 backdrop-blur-xl p-8 md:p-10">
 			<div className="flex flex-col gap-2">

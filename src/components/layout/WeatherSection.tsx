@@ -1,4 +1,4 @@
-export function WeatherSection({
+export default function WeatherSection({
 	title,
 	children,
 }: {

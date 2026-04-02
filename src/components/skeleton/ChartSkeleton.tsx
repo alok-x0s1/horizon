@@ -1,6 +1,6 @@
 import { Card } from "../ui/card";
 
-export function ChartSkeleton() {
+export default function ChartSkeleton() {
 	return (
 		<Card className="border-card-border bg-card/80 backdrop-blur-xl p-4 md:p-6">
 			<div className="space-y-4 animate-pulse">
