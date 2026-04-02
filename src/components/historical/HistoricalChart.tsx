@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import type { HistoricalData } from "../../lib/types";
 import { colors } from "../../lib/utils";
 import { Card } from "../ui/card";
-import { HighchartsWrapper } from "../charts";
+import HighchartsWrapper from "../charts/HighchartsWrapper";
 
 interface Props {
 	historicalData: HistoricalData;

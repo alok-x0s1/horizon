@@ -8,8 +8,8 @@ import { colors } from "../../lib/utils";
 import { useWeatherStore } from "../../store";
 import { Card } from "../ui/card";
 import { ChartSkeleton } from "../skeleton";
-import { HighchartsWrapper } from "../charts";
 import { ErrorState } from "../layout";
+import HighchartsWrapper from "../charts/HighchartsWrapper";
 
 export default function HourlyForecast() {
 	const { isCelsius, selectedDate: date } = useWeatherStore();
