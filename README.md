@@ -2,6 +2,8 @@
 
 A weather analytics application built with React.js, providing real-time weather data, historical analysis, and interactive visualizations powered by the Open-Meteo API and Highcharts.
 
+> Recommended: open the web app in **Google Chrome** for the best compatibility and experience.
+
 ![Version](https://img.shields.io/badge/version-1.0.0-blue)
 ![React](https://img.shields.io/badge/React.js-19-61dafb)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
